@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -166,8 +167,8 @@ public class KafkaZabbixSender {
 		consumer.setMessageListener(new MessageListener() {
 
 			@Override
-			public void onMessage(JSONObject message) {
-				System.err.println(message);
+			public void onMessage(String jsonStringMessage) {
+			    JSONObject message = (JSONObject) JSON.parse(jsonStringMessage);
 				String hostName = message.getString("hostName");
 				String ip = message.getString("ip");
 				if (bCreateNotExistHostGroup) {
@@ -179,7 +180,7 @@ public class KafkaZabbixSender {
 
 				long clock = message.getLongValue("clock");
 
-				List<DataObject> dataObjectList = new LinkedList();
+				List<DataObject> dataObjectList = new LinkedList<DataObject>();
 
 				JSONObject meters = message.getJSONObject("meters");
 				for (Entry<String, Object> entry : meters.entrySet()) {

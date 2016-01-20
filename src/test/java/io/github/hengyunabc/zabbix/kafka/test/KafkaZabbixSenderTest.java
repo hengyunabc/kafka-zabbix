@@ -10,8 +10,6 @@ import io.github.hengyunabc.zabbix.sender.ZabbixSender;
 public class KafkaZabbixSenderTest {
 
 	public static void main(String[] args) throws InterruptedException {
-
-		
 		KafkaZabbixSender kafkaZabbixSender = new KafkaZabbixSender();
 		
 		int port = 10051;
@@ -41,6 +39,5 @@ public class KafkaZabbixSenderTest {
 		kafkaZabbixSender.init();
 		
 		TimeUnit.SECONDS.sleep(5000);
-		
 	}
 }
